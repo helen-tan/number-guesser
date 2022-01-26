@@ -10,7 +10,7 @@ GAME FUNCTION:
 // Game values
 let min = 1,
     max = 10,
-    winningNum = 2,
+    winningNum = getRandomNum(min, max),
     guessesLeft = 3;
 
 // UI elements
@@ -85,9 +85,15 @@ function gameOver(won, msg) {
     // and search for our target.
 }
 
+// Set Message
 function setMessage(msg, color) {
     // set message color 
     message.style.color = color;
     // output into the <p class='message'></p> ->v message variable
     message.textContent = msg;
+}
+
+// Get Winning Number
+function getRandomNum(min, max){
+    return Math.floor(Math.random() * (max - min + 1) + min);
 }
