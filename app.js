@@ -14,7 +14,7 @@ let min = 1,
     guessesLeft = 3;
 
 // UI elements
-const game = document.querySelector('#game'),
+const gameWrapper = document.querySelector('#game'),
     minNum = document.querySelector('.min-num'),
     maxNum = document.querySelector('.max-num'),
     guessBtn = document.querySelector('#guess-btn'),
@@ -38,7 +38,7 @@ guessBtn.addEventListener('click', function () {
     // Check if winning number
     if (guess === winningNum) {
         // Game over - Won
-       gameOver(true, `${winningNum} is correct, You win!`);
+        gameOver(true, `${winningNum} is correct, You win!`);
     } else {
         guessesLeft -= 1;
 
@@ -57,16 +57,32 @@ guessBtn.addEventListener('click', function () {
 
 });
 
+// Play again Event Listener
+gameWrapper.addEventListener('mousedown', function (e) {
+    // Event delegation
+    if(e.target.className === 'play-again'){
+        // reload the page
+        window.location.reload();
+    }
+});
+
 // Game over
-function gameOver(won, msg){
+function gameOver(won, msg) {
     let color;
     won === true ? color = 'green' : color = 'red';
 
-    // Disable input + Change border color + set message
+    // Disable input + Change border & msg text color + set message
     guessInput.disable = true;
     guessInput.style.borderColor = color;
     message.style.color = color;
     setMessage(msg);
+
+    // Play again
+    guessBtn.value = 'Play Again';
+    guessBtn.className += 'play-again';
+    // Since this class is added after the page loads, we need
+    // to use Event Delegation - add a listener on the parent
+    // and search for our target.
 }
 
 function setMessage(msg, color) {
